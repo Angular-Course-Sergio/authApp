@@ -1,1 +1,3 @@
-<router-outlet/>
+<h1 *ngIf="!finishedAuthCheck()">Cargando...</h1>
+
+<router-outlet *ngIf="finishedAuthCheck()" />
