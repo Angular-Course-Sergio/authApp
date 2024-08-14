@@ -1,9 +1,17 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { inject } from '@angular/core';
+import { AuthStatus } from '../enums/auth-status.enum';
 
 export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
-  console.log('isAuthenticatedGuard');
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  console.log({ route, state });
+  if (authService.authStatus() === AuthStatus.authenticated) return true;
 
-  return true;
+  // const url = state.url;
+  // localStorage.setItem('url', url);
+  router.navigateByUrl('/auth/login');
+
+  return false;
 };
